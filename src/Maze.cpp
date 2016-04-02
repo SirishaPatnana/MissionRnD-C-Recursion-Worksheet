@@ -32,11 +32,23 @@ x1,x2,y1,y2: Co-ordinates
 Hint : You can use path_exists as a wrapper function for your original recursive function which might take
 more parameters .
 */
-
 #include<stdlib.h>
-
-
+int valid(int *maze, int rows, int columns, int i, int j)
+{
+	if (i >= 0 && i < rows && j >= 0 && j < columns && *(maze + (i*columns) + j) == 1)
+		return 1;
+	return 0;
+}
 int path_exists(int *maze, int rows, int columns, int x1, int y1, int x2, int y2)
 {
-	return 1;
+	/*if (x1 == x2 && y1 == y2)
+		return 1;
+	if (valid(maze, rows, columns, x1, y1))
+	{
+		if (path_exists(maze, rows, columns, x1, y1 + 1, x2, y2)) return 1;
+		if (path_exists(maze, rows, columns, x1 + 1, y1, x2, y2)) return 1;
+		if (path_exists(maze, rows, columns, x1 - 1, y1, x2, y2)) return 1;
+		return 0;
+	}*/
+	return 0;
 }
