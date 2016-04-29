@@ -33,22 +33,44 @@ Hint : You can use path_exists as a wrapper function for your original recursive
 more parameters .
 */
 #include<stdlib.h>
-int valid(int *maze, int rows, int columns, int i, int j)
+int valid(int *maze, int x, int y,int M,int N)
 {
-	if (i >= 0 && i < rows && j >= 0 && j < columns && *(maze + (i*columns) + j) == 1)
+	if (x >= 0 && x < M && y >= 0 && y < N && *(maze + (x*N) + y) == 1)	
 		return 1;
 	return 0;
 }
-int path_exists(int *maze, int rows, int columns, int x1, int y1, int x2, int y2)
+int path_exists(int *maze, int M, int N, int x1, int y1, int x2, int y2)
 {
-	/*if (x1 == x2 && y1 == y2)
-		return 1;
-	if (valid(maze, rows, columns, x1, y1))
-	{
-		if (path_exists(maze, rows, columns, x1, y1 + 1, x2, y2)) return 1;
-		if (path_exists(maze, rows, columns, x1 + 1, y1, x2, y2)) return 1;
-		if (path_exists(maze, rows, columns, x1 - 1, y1, x2, y2)) return 1;
+	int x, y, a = 0, b = 0, c = 0, d = 0;
+	if (maze[x2*M + y2] == 0||maze[x1*M+y1]==0)
 		return 0;
-	}*/
+	if (x1 == x2 && y1 == y2)
+		return 1;
+	if (valid(maze, x1, y1, M, N) == true)
+	{
+		maze[x1*M + y1] = -1;
+		if (path_exists(maze, M, N, x1, y1 + 1, x2, y2))
+		{
+			a = 1;
+		}
+		if (path_exists(maze, M, N, x1 + 1, y1, x2, y2))
+		{
+			b = 1;
+		}
+		if (path_exists(maze, M, N, x1 - 1, y1, x2, y2))
+		{
+			
+			c = 1;
+		}
+		if (path_exists(maze, M, N, x1, y1 - 1, x2, y2))
+		{
+			d = 1;
+		}
+		maze[x1*M + y1] = 1;
+		if (a == 1 || b == 1 || c == 1 || d == 1)
+			return 1;
+		else
+			return 0;
+	}
 	return 0;
 }

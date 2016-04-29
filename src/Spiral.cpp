@@ -34,7 +34,54 @@ Note : Check the function Parameters ,Its a double pointer .
 #include "stdafx.h"
 #include<stdlib.h>
 
+int* path(int k, int m, int l, int n, int c, int **input_array, int *output)
+{
+	int i;
+	if (input_array == NULL||m<0||n<0)
+		return NULL;
+	if (k < m && l < n)
+	{
+		for (i = l; i < n; ++i)
+		{
+			output[c++]=input_array[k][i];
+		}
+		k++;
+
+		/* Print the last column from the remaining columns */
+		for (i = k; i < m; ++i)
+		{
+			output[c++] = input_array[i][n-1]; 
+		}
+		n--;
+
+		/* Print the last row from the remaining rows */
+		if (k < m)
+		{
+			for (i = n - 1; i >= l; --i)
+			{
+				output[c++] = input_array[m-1][i];
+			}
+			m--;
+		}
+
+		/* Print the first column from the remaining columns */
+		if (l < n)
+		{
+			for (i = m - 1; i >= k; --i)
+			{
+				output[c++] = input_array[i][l];
+			}
+			l++;
+		}
+		return path(k, m, l, n, c, input_array, output);
+	}
+	else
+		return output;
+}
 int *spiral(int rows, int columns, int **input_array)
 {
-	return NULL;
+	int *output = (int *)malloc(rows*columns*sizeof(int));
+	if (rows <= 0 || columns <= 0)
+		return NULL;
+	return path(0,rows,0,columns,0,input_array,output);
 }
