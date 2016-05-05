@@ -113,8 +113,6 @@ namespace spec
 			Assert::AreEqual(0, path_exists((int*)maze, m, n, x1, y1, x2, y2), L"Error for 1x20 Maze", 1, 2);
 			
 		}
-
-		
 		[TestMethod(), Timeout(3000)]
 		void Maze_6x6()
 		{
@@ -134,7 +132,7 @@ namespace spec
 		}
 
 
-		/*[TestMethod(), Timeout(3000)]
+		[TestMethod(), Timeout(3000)]
 		void Maze_3x5()
 		{
 			int maze[3][5] = {
@@ -162,7 +160,7 @@ namespace spec
 			Assert::AreEqual(0, path_exists((int*)maze, m, n, x1, y1, x2, y2), L"Error for 3x5 Maze", 1,2);
 			
 						
-		}*/
+		}
 		
 
 	};

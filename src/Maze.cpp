@@ -32,45 +32,36 @@ x1,x2,y1,y2: Co-ordinates
 Hint : You can use path_exists as a wrapper function for your original recursive function which might take
 more parameters .
 */
-#include<stdlib.h>
-int valid(int *maze, int x, int y,int M,int N)
+int path_exist(int *maze, int M, int N, int x1, int y1, int x2, int y2)
 {
-	if (x >= 0 && x < M && y >= 0 && y < N && *(maze + (x*N) + y) == 1)	
+	int x, y, a = 0, b = 0, t, c = 0, d = 0;
+	if (x1 == x2 && y1 == y2)
+		return 1;
+	t = maze[x1*N + y1];
+	maze[x1*N + y1] = -1;
+	if (x1 - 1 >= 0)
+	if (maze[(x1 - 1)*N + y1] == 1)
+		a = path_exist(maze, M, N, x1 - 1, y1, x2, y2);
+	if (x1 + 1 < M)
+	if (maze[(x1 + 1)*N + y1] == 1)
+		b = path_exist(maze, M, N, x1 + 1, y1, x2, y2);
+	if (y1 - 1 >= 0)
+	if (maze[(x1)*N + y1 - 1] == 1)
+		c = path_exist(maze, M, N, x1, y1 - 1, x2, y2);
+	if (y1 + 1<N)
+	if (maze[(x1)*N + y1 + 1] == 1)
+		d = path_exist(maze, M, N, x1, y1 + 1, x2, y2);
+	maze[x1*N + y1] = t;
+	if (a == 1 || b == 1 || c == 1 || d == 1)
 		return 1;
 	return 0;
 }
 int path_exists(int *maze, int M, int N, int x1, int y1, int x2, int y2)
 {
-	int x, y, a = 0, b = 0, c = 0, d = 0;
-	if (maze[x2*M + y2] == 0||maze[x1*M+y1]==0)
+
+	if (x1 >= M || x1 < 0 || x2 >= M || x2 < 0 || y1 >= N || y1 < 0 || y2 >= N || y2 < 0)
 		return 0;
-	if (x1 == x2 && y1 == y2)
-		return 1;
-	if (valid(maze, x1, y1, M, N) == true)
-	{
-		maze[x1*M + y1] = -1;
-		if (path_exists(maze, M, N, x1, y1 + 1, x2, y2))
-		{
-			a = 1;
-		}
-		if (path_exists(maze, M, N, x1 + 1, y1, x2, y2))
-		{
-			b = 1;
-		}
-		if (path_exists(maze, M, N, x1 - 1, y1, x2, y2))
-		{
-			
-			c = 1;
-		}
-		if (path_exists(maze, M, N, x1, y1 - 1, x2, y2))
-		{
-			d = 1;
-		}
-		maze[x1*M + y1] = 1;
-		if (a == 1 || b == 1 || c == 1 || d == 1)
-			return 1;
-		else
-			return 0;
-	}
-	return 0;
+	if (maze[x2*N + y2] == 0 || maze[x1*N + y1] == 0)
+		return 0;
+	return path_exist(maze, M, N, x1, y1, x2, y2);
 }
